@@ -112,3 +112,11 @@ button {
 button:hover {
   background-color: #e6c200;    /* slightly darker gold on hover */
 }
+#category-items {
+  display: flex;           /* use flex layout */
+  flex-direction: column;  /* stack items vertically */
+  gap: 15px;               /* space between buttons */
+  max-width: 400px;        /* optional: keep buttons neat */
+  margin: 0 auto;
+  padding: 20px;
+}
