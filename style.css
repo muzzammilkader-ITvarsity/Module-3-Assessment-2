@@ -58,3 +58,57 @@ button:hover, a:hover {
     gap: 20px;
   }
 }
+/* === Black & Gold Color Scheme === */
+
+/* Body background and default text */
+body {
+  background-color: #000;       /* black background */
+  color: #FFD700;               /* gold text */
+}
+
+/* Headers */
+header h1, header h2, header h3 {
+  color: #FFD700;               /* gold headers */
+}
+
+/* Links */
+a {
+  color: #FFD700;               /* gold links */
+  text-decoration: none;
+}
+
+a:hover {
+  color: #fff;                  /* optional: white on hover */
+}
+
+/* Main content background (optional: semi-transparent for readability) */
+main {
+  background-color: rgba(0, 0, 0, 0.8); /* dark overlay if needed */
+  padding: 20px;
+}
+
+/* Footer text */
+footer {
+  color: #FFD700;
+}
+
+/* Form labels */
+label, textarea, input[type="text"], input[type="number"], select {
+  color: #FFD700;
+}
+
+/* Optional: borders in gold for inputs or images */
+input, textarea, select, img.food-pic {
+  border: 1px solid #FFD700;
+}
+
+/* Buttons (if you want them gold with black text) */
+button {
+  background-color: #FFD700;    /* gold button */
+  color: #000;                  /* black text */
+  border: none;
+}
+
+button:hover {
+  background-color: #e6c200;    /* slightly darker gold on hover */
+}
