@@ -165,3 +165,47 @@
   </script>
 </body>
 </html>
+// Get meal name from URL and normalize
+const params = new URLSearchParams(window.location.search);
+let mealName = params.get("name");
+if (mealName) mealName = mealName.trim().toLowerCase();
+
+// Normalize meal keys
+const normalizedMeals = {};
+Object.keys(meals).forEach(key => {
+  normalizedMeals[key.toLowerCase()] = meals[key];
+});
+
+// Find the meal object
+const meal = normalizedMeals[mealName];
+
+if (meal) {
+  // Get the proper key from original meals object
+  const properName = Object.keys(meals).find(k => k.toLowerCase() === mealName);
+
+  // Fill in all fields
+  document.getElementById("meal-name").textContent = properName;
+  document.getElementById("meal-img").src = meal.img;
+  document.getElementById("meal-price").textContent = meal.price;
+  document.getElementById("meal-size").textContent = meal.size;
+  document.getElementById("meal-desc").textContent = meal.desc;
+  document.getElementById("meal-hidden").value = properName;
+
+  // Generate checkboxes for extras
+  const extrasContainer = document.getElementById("meal-extras");
+  extrasContainer.innerHTML = "";
+  meal.extras.forEach((extra, index) => {
+    const label = document.createElement("label");
+    label.style.display = "block";
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = "extras";
+    checkbox.value = extra;
+    checkbox.id = `extra-${index}`;
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(" " + extra));
+    extrasContainer.appendChild(label);
+  });
+} else {
+  document.querySelector("main").innerHTML = "<p>Sorry, meal not found.</p>";
+}
