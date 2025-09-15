@@ -8,21 +8,17 @@
 </head>
 <body>
   <header>
-    <h1>Garlic Bread</h1>
+    <h1 id="meal-name">Meal</h1>
   </header>
 
   <main>
-    <img src="images/garlic_bread.jpg" alt="Garlic Bread" class="food-pic">
-    <p><strong>Price:</strong> $5.00</p>
-    <p><strong>Serving size:</strong> 2 pieces</p>
-    <p><strong>Description:</strong> Crispy oven-baked garlic bread topped with herbs and butter.</p>
+    <img id="meal-img" src="images/default.jpg" alt="Meal Picture" class="food-pic">
+    <p><strong>Price:</strong> <span id="meal-price"></span></p>
+    <p><strong>Serving size:</strong> <span id="meal-size"></span></p>
+    <p id="meal-desc"></p>
 
     <h3>Extras</h3>
-    <ul>
-      <li>Cheese topping</li>
-      <li>Extra butter</li>
-      <li>Chili flakes</li>
-    </ul>
+    <ul id="meal-extras"></ul>
 
     <form action="order.html" method="GET">
       <label for="notes">Special Requests:</label><br>
@@ -32,7 +28,99 @@
   </main>
 
   <footer>
-    <a href="starters.html">← Back to Starters</a>
+    <a href="index.html">← Back to Home</a>
   </footer>
+
+  <script>
+    // Meal data
+    const meals = {
+      "Garlic Bread": {
+        img: "images/garlic_bread.jpg",
+        price: "$5.00",
+        size: "2 pieces",
+        desc: "Crispy oven-baked garlic bread topped with herbs and butter.",
+        extras: ["Cheese topping", "Extra butter", "Chili flakes"]
+      },
+      "Chicken Wings": {
+        img: "images/chicken_wings.jpg",
+        price: "$8.00",
+        size: "6 wings",
+        desc: "Spicy grilled chicken wings served with dipping sauce.",
+        extras: ["Extra sauce", "Blue cheese dip", "Celery sticks"]
+      },
+      "Soup of the Day": {
+        img: "images/soup.jpg",
+        price: "$6.00",
+        size: "1 bowl",
+        desc: "Freshly made soup, ask your server for today's special.",
+        extras: ["Bread roll", "Cheese topping", "Croutons"]
+      },
+      "Chocolate Cake": {
+        img: "images/chocolate_cake.jpg",
+        price: "$7.00",
+        size: "1 slice",
+        desc: "Rich and moist chocolate cake with creamy frosting.",
+        extras: ["Whipped cream", "Extra frosting", "Strawberries"]
+      },
+      "Ice Cream Sundae": {
+        img: "images/sundae.jpg",
+        price: "$6.50",
+        size: "1 cup",
+        desc: "Vanilla ice cream with chocolate syrup, nuts, and a cherry.",
+        extras: ["Extra syrup", "Chopped nuts", "Sprinkles"]
+      },
+      "Fruit Salad": {
+        img: "images/fruit_salad.jpg",
+        price: "$5.50",
+        size: "1 bowl",
+        desc: "A mix of seasonal fruits served fresh and chilled.",
+        extras: ["Yogurt", "Honey drizzle", "Chia seeds"]
+      },
+      "Cola": {
+        img: "images/cola.jpg",
+        price: "$2.00",
+        size: "330ml",
+        desc: "Refreshing cold cola with ice.",
+        extras: ["Extra ice", "Lemon slice"]
+      },
+      "Orange Juice": {
+        img: "images/orange_juice.jpg",
+        price: "$3.00",
+        size: "350ml",
+        desc: "Freshly squeezed orange juice full of vitamin C.",
+        extras: ["Extra pulp", "Ice cubes"]
+      },
+      "Milkshake": {
+        img: "images/milkshake.jpg",
+        price: "$4.50",
+        size: "400ml",
+        desc: "Creamy milkshake available in chocolate, vanilla, or strawberry.",
+        extras: ["Whipped cream", "Choco chips", "Caramel drizzle"]
+      }
+    };
+
+    // Get meal name from URL
+    const params = new URLSearchParams(window.location.search);
+    const mealName = params.get("name");
+
+    if (mealName && meals[mealName]) {
+      const meal = meals[mealName];
+      document.getElementById("meal-name").textContent = mealName;
+      document.getElementById("meal-img").src = meal.img;
+      document.getElementById("meal-price").textContent = meal.price;
+      document.getElementById("meal-size").textContent = meal.size;
+      document.getElementById("meal-desc").textContent = meal.desc;
+
+      const extrasList = document.getElementById("meal-extras");
+      extrasList.innerHTML = "";
+      meal.extras.forEach(extra => {
+        const li = document.createElement("li");
+        li.textContent = extra;
+        extrasList.appendChild(li);
+      });
+    } else {
+      document.querySelector("main").innerHTML = "<p>Sorry, meal not found.</p>";
+    }
+  </script>
 </body>
 </html>
