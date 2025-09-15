@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Starters - Tasty Bites</title>
+  <title>Drinks - Tasty Bites</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>Starters</h1>
+    <h1>Drinks</h1>
   </header>
 
   <main>
@@ -21,22 +21,22 @@
 
   <script>
     const menuCategories = {
-      "Starters": [
-        "Garlic Bread",
-        "Chicken Wings",
-        "Soup of the Day",
-        "Bruschetta",
-        "Stuffed Mushrooms",
-        "Onion Rings",
-        "Caprese Salad",
-        "Spring Rolls",
-        "Calamari",
-        "Cheese Platter"
+      "Drinks": [
+        "Cola",
+        "Orange Juice",
+        "Milkshake",
+        "Water",
+        "Lemonade",
+        "Iced Tea",
+        "Cappuccino",
+        "Latte",
+        "Hot Chocolate",
+        "Smoothie"
       ]
     };
 
     const container = document.getElementById("category-items");
-    menuCategories["Starters"].forEach(item => {
+    menuCategories["Drinks"].forEach(item => {
       const btn = document.createElement("a");
       btn.href = `item.html?name=${encodeURIComponent(item)}`;
       btn.textContent = item;
