@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="style.css">
   <style>
     #category-items {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
       max-width: 400px;
       margin: 0 auto;
       padding: 20px;
@@ -14,7 +17,6 @@
 
     .menu-button {
       display: block;
-      margin: 10px 0;
       padding: 12px 20px;
       background-color: #FFD700;
       color: #000;
@@ -44,23 +46,21 @@
   </footer>
 
   <script>
-    const menuCategories = {
-      "Drinks": [
-        "Cola",
-        "Orange Juice",
-        "Milkshake",
-        "Water",
-        "Lemonade",
-        "Iced Tea",
-        "Cappuccino",
-        "Latte",
-        "Hot Chocolate",
-        "Smoothie"
-      ]
-    };
+    const drinks = [
+      "Cola",
+      "Orange Juice",
+      "Milkshake",
+      "Water",
+      "Lemonade",
+      "Iced Tea",
+      "Cappuccino",
+      "Latte",
+      "Hot Chocolate",
+      "Smoothie"
+    ];
 
     const container = document.getElementById("category-items");
-    menuCategories["Drinks"].forEach(item => {
+    drinks.forEach(item => {
       const btn = document.createElement("a");
       btn.href = `item.html?name=${encodeURIComponent(item)}`;
       btn.textContent = item;
