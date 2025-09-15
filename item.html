@@ -18,7 +18,9 @@
     <p id="meal-desc"></p>
 
     <h3>Extras</h3>
-    <ul id="meal-extras"></ul>
+    <form id="extras-form">
+      <div id="meal-extras"></div>
+    </form>
 
     <form action="order.html" method="GET">
       <label for="notes">Special Requests:</label><br>
@@ -34,6 +36,7 @@
   <script>
     // Complete meals data
     const meals = {
+      // Main Meals
       "Burger": {
         img: "images/burger.jpg",
         price: "$10.00",
@@ -55,6 +58,8 @@
         desc: "Al dente pasta tossed in a rich and creamy sauce, with your choice of chicken, beef, or vegetables. Garnished with fresh herbs and parmesan cheese for a perfect finishing touch. A hearty and satisfying dish for any pasta lover.",
         extras: ["Parmesan cheese", "Extra sauce", "Garlic bread", "Chili flakes"]
       },
+
+      // Starters
       "Garlic Bread": {
         img: "images/garlic_bread.jpg",
         price: "$5.00",
@@ -76,6 +81,8 @@
         desc: "A comforting bowl of soup made from fresh, seasonal ingredients. Each day features a new recipe, slowly simmered to bring out the deep, natural flavors. Served hot with a side of crusty bread, perfect for warming you up or starting a delicious meal.",
         extras: ["Bread roll", "Cheese topping", "Croutons"]
       },
+
+      // Desserts
       "Chocolate Cake": {
         img: "images/chocolate_cake.jpg",
         price: "$7.00",
@@ -97,6 +104,8 @@
         desc: "A refreshing mix of hand-selected seasonal fruits, cut and served fresh. Bursting with natural flavors, vitamins, and a hint of citrus dressing to enhance the taste. Perfect as a light dessert or a healthy snack to recharge your day.",
         extras: ["Yogurt", "Honey drizzle", "Chia seeds"]
       },
+
+      // Drinks
       "Cola": {
         img: "images/cola.jpg",
         price: "$2.00",
@@ -123,11 +132,9 @@
     // Get meal name from URL and normalize
     const params = new URLSearchParams(window.location.search);
     let mealName = params.get("name");
-    if (mealName) {
-      mealName = mealName.trim().toLowerCase(); // lowercase & trim
-    }
+    if (mealName) mealName = mealName.trim().toLowerCase();
 
-    // Normalize meal keys for lookup
+    // Normalize meal keys
     const normalizedMeals = {};
     Object.keys(meals).forEach(key => {
       normalizedMeals[key.toLowerCase()] = meals[key];
@@ -140,18 +147,4 @@
       document.getElementById("meal-img").src = meal.img;
       document.getElementById("meal-price").textContent = meal.price;
       document.getElementById("meal-size").textContent = meal.size;
-      document.getElementById("meal-desc").textContent = meal.desc;
-
-      const extrasList = document.getElementById("meal-extras");
-      extrasList.innerHTML = "";
-      meal.extras.forEach(extra => {
-        const li = document.createElement("li");
-        li.textContent = extra;
-        extrasList.appendChild(li);
-      });
-    } else {
-      document.querySelector("main").innerHTML = "<p>Sorry, meal not found.</p>";
-    }
-  </script>
-</body>
-</html>
+      document.getElementById("meal-
