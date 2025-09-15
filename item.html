@@ -12,19 +12,21 @@
   </header>
 
   <main>
-    <img id="meal-img" src="images/default.jpg" alt="Meal Picture" class="food-pic">
+    <img id="meal-img" src="" alt="Meal Image" class="food-pic">
     <p><strong>Price:</strong> <span id="meal-price"></span></p>
-    <p><strong>Serving size:</strong> <span id="meal-size"></span></p>
+    <p><strong>Serving Size:</strong> <span id="meal-size"></span></p>
     <p id="meal-desc"></p>
 
-    <form action="order.html" method="GET" id="order-form">
-      <h3>Extras</h3>
-      <div id="meal-extras"></div>
+    <form id="order-form" action="order.html">
+      <fieldset>
+        <legend>Extras:</legend>
+        <div id="meal-extras"></div>
+      </fieldset>
 
-      <label for="notes">Special Requests:</label><br>
-      <textarea id="notes" name="notes" rows="4" cols="40"></textarea><br><br>
+      <label for="meal-notes">Additional Notes:</label>
+      <textarea name="notes" id="meal-notes" rows="3"></textarea>
 
-      <input type="hidden" name="meal" id="meal-hidden">
+      <input type="hidden" name="meal-name" id="meal-hidden">
       <button type="submit">Place Order</button>
     </form>
   </main>
@@ -35,121 +37,237 @@
 
   <script>
     const meals = {
-      // Main Meals
-      "Burger": {
-        img: "images/burger.jpg",
-        price: "$10.00",
-        size: "1 burger",
-        desc: `Juicy beef patty grilled to perfection, topped with fresh lettuce, tomato, onions, pickles, and our signature sauce, all inside a soft sesame bun. Served with a side of crispy golden fries. Perfect for lunch or dinner lovers seeking a classic comfort meal.`,
-        extras: ["Cheese", "Bacon", "Extra sauce", "Fries", "Onion rings"]
-      },
-      "Pizza": {
-        img: "images/pizza.jpg",
-        price: "$12.00",
-        size: "1 medium pizza (8 slices)",
-        desc: `Delicious hand-tossed pizza with a golden crust, topped with rich tomato sauce, mozzarella cheese, and your choice of fresh toppings. Each slice is packed with flavor and baked to perfection. Ideal for sharing with friends or enjoying alone.`,
-        extras: ["Extra cheese", "Pepperoni", "Mushrooms", "Olives", "Chili flakes"]
-      },
-      "Pasta": {
-        img: "images/pasta.jpg",
-        price: "$11.00",
-        size: "1 plate",
-        desc: `Al dente pasta tossed in a rich and creamy sauce, with your choice of chicken, beef, or vegetables. Garnished with fresh herbs and parmesan cheese for a perfect finishing touch. A hearty and satisfying dish for any pasta lover.`,
-        extras: ["Parmesan cheese", "Extra sauce", "Garlic bread", "Chili flakes"]
-      },
-
       // Starters
       "Garlic Bread": {
         img: "images/garlic_bread.jpg",
-        price: "$5.00",
+        price: "R25",
         size: "2 pieces",
-        desc: `Our Garlic Bread is freshly baked with golden crusts, brushed with a rich garlic butter blend, and topped with fragrant herbs. Perfectly crunchy on the outside, soft and fluffy inside. Ideal as a starter to any meal or for sharing with friends.`,
-        extras: ["Cheese topping", "Extra butter", "Chili flakes"]
+        desc: "Freshly baked garlic bread with herbs and butter. Perfect to start your meal.",
+        extras: ["Cheese", "Extra Garlic", "Olives"]
       },
       "Chicken Wings": {
         img: "images/chicken_wings.jpg",
-        price: "$8.00",
-        size: "6 wings",
-        desc: `Succulent chicken wings marinated in our signature spice mix, grilled to perfection, and served with a choice of tangy sauces. Each wing is tender inside, with a slightly crisp skin, giving you the perfect combination of flavor and texture. Perfect for sharing or as a hearty starter.`,
-        extras: ["Extra sauce", "Blue cheese dip", "Celery sticks"]
+        price: "R50",
+        size: "6 pieces",
+        desc: "Spicy chicken wings served with your choice of dipping sauce. Crispy and juicy.",
+        extras: ["Extra sauce", "Extra spice", "Ranch"]
       },
       "Soup of the Day": {
         img: "images/soup.jpg",
-        price: "$6.00",
+        price: "R30",
         size: "1 bowl",
-        desc: `A comforting bowl of soup made from fresh, seasonal ingredients. Each day features a new recipe, slowly simmered to bring out the deep, natural flavors. Served hot with a side of crusty bread, perfect for warming you up or starting a delicious meal.`,
-        extras: ["Bread roll", "Cheese topping", "Croutons"]
+        desc: "A warm, comforting soup made fresh daily with seasonal ingredients.",
+        extras: ["Croutons", "Extra herbs", "Cheese"]
+      },
+      "Bruschetta": {
+        img: "images/bruschetta.jpg",
+        price: "R30",
+        size: "4 pieces",
+        desc: "Toasted bread topped with fresh tomatoes, basil, garlic, and olive oil.",
+        extras: ["Extra olive oil", "Parmesan", "Balsamic glaze"]
+      },
+      "Stuffed Mushrooms": {
+        img: "images/stuffed_mushrooms.jpg",
+        price: "R35",
+        size: "5 pieces",
+        desc: "Mushrooms filled with a blend of cheeses, garlic, and herbs, baked to perfection.",
+        extras: ["Extra cheese", "Breadcrumb topping", "Garlic butter"]
+      },
+      "Onion Rings": {
+        img: "images/onion_rings.jpg",
+        price: "R25",
+        size: "10 rings",
+        desc: "Crispy golden onion rings served with tangy dipping sauce. Perfect for sharing.",
+        extras: ["Ketchup", "BBQ sauce", "Cheese dip"]
+      },
+      "Caprese Salad": {
+        img: "images/caprese.jpg",
+        price: "R40",
+        size: "1 plate",
+        desc: "Fresh mozzarella, tomatoes, and basil drizzled with olive oil and balsamic glaze.",
+        extras: ["Extra balsamic", "Olive oil", "Extra mozzarella"]
+      },
+      "Spring Rolls": {
+        img: "images/spring_rolls.jpg",
+        price: "R35",
+        size: "6 rolls",
+        desc: "Crispy vegetable spring rolls served with sweet chili sauce. Crunchy and savory.",
+        extras: ["Extra chili sauce", "Peanut sauce", "Soy sauce"]
+      },
+      "Calamari": {
+        img: "images/calamari.jpg",
+        price: "R55",
+        size: "1 plate",
+        desc: "Tender calamari rings lightly fried and served with garlic aioli dip.",
+        extras: ["Extra aioli", "Lemon wedge", "Spicy sauce"]
+      },
+      "Cheese Platter": {
+        img: "images/cheese_platter.jpg",
+        price: "R60",
+        size: "1 platter",
+        desc: "A selection of fine cheeses served with crackers and grapes. Perfect for sharing.",
+        extras: ["Extra crackers", "Honey", "Nuts"]
       },
 
-      // Desserts
-      "Chocolate Cake": {
-        img: "images/chocolate_cake.jpg",
-        price: "$7.00",
-        size: "1 slice",
-        desc: `Indulge in our decadent chocolate cake, layered with rich, smooth chocolate frosting. Moist and fluffy, made with premium cocoa and topped with chocolate shavings. Each bite melts in your mouth, giving a perfect balance of sweetness and chocolatey goodness.`,
-        extras: ["Whipped cream", "Extra frosting", "Strawberries"]
+      // Main Meals
+      "Burger": {
+        img: "images/burger.jpg",
+        price: "R55",
+        size: "1 burger",
+        desc: "Juicy beef patty with lettuce, tomato, cheese, and sauces. Served with fries.",
+        extras: ["Extra cheese", "Bacon", "Pickles", "Onion Rings"]
       },
-      "Ice Cream Sundae": {
-        img: "images/sundae.jpg",
-        price: "$6.50",
-        size: "1 cup",
-        desc: `A classic ice cream sundae featuring creamy vanilla ice cream topped with chocolate syrup, crunchy nuts, and a bright red cherry. Perfectly chilled and sweet, with a variety of textures in every bite. Great for dessert lovers of all ages.`,
-        extras: ["Extra syrup", "Chopped nuts", "Sprinkles"]
+      "Pizza": {
+        img: "images/pizza.jpg",
+        price: "R80",
+        size: "1 medium",
+        desc: "Thin crust pizza topped with cheese, tomato sauce, and your choice of toppings.",
+        extras: ["Extra pepperoni", "Extra cheese", "Pineapple slice", "Mushrooms"]
       },
-      "Fruit Salad": {
-        img: "images/fruit_salad.jpg",
-        price: "$5.50",
-        size: "1 bowl",
-        desc: `A refreshing mix of hand-selected seasonal fruits, cut and served fresh. Bursting with natural flavors, vitamins, and a hint of citrus dressing to enhance the taste. Perfect as a light dessert or a healthy snack to recharge your day.`,
-        extras: ["Yogurt", "Honey drizzle", "Chia seeds"]
+      "Pasta": {
+        img: "images/pasta.jpg",
+        price: "R70",
+        size: "1 plate",
+        desc: "Pasta cooked al dente with rich sauce and your choice of toppings.",
+        extras: ["Extra cheese", "Extra sauce", "Grilled chicken", "Mushrooms"]
+      },
+      "Grilled Chicken": {
+        img: "images/grilled_chicken.jpg",
+        price: "R95",
+        size: "1 plate",
+        desc: "Juicy grilled chicken breast with roasted vegetables and mashed potatoes.",
+        extras: ["Extra sauce", "Mashed potatoes", "Vegetables"]
+      },
+      "Steak": {
+        img: "images/steak.jpg",
+        price: "R150",
+        size: "200g",
+        desc: "Premium beef steak grilled to perfection. Served with your choice of sauce and sides.",
+        extras: ["Pepper sauce", "Mushroom sauce", "Fries"]
+      },
+      "Fish & Chips": {
+        img: "images/fish_chips.jpg",
+        price: "R120",
+        size: "1 plate",
+        desc: "Crispy battered fish served with golden fries and tartar sauce. Classic comfort food.",
+        extras: ["Tartar sauce", "Lemon wedge", "Extra fries"]
+      },
+      "Vegetable Stir Fry": {
+        img: "images/veggie_stirfry.jpg",
+        price: "R85",
+        size: "1 plate",
+        desc: "Fresh seasonal vegetables stir-fried with savory sauce. Served with rice or noodles.",
+        extras: ["Extra sauce", "Chili flakes", "Noodles instead of rice"]
+      },
+      "Beef Tacos": {
+        img: "images/beef_tacos.jpg",
+        price: "R95",
+        size: "3 tacos",
+        desc: "Soft tortillas filled with seasoned beef, fresh vegetables, and cheese.",
+        extras: ["Extra cheese", "Sour cream", "Guacamole"]
+      },
+      "Chicken Parmesan": {
+        img: "images/chicken_parmesan.jpg",
+        price: "R110",
+        size: "1 plate",
+        desc: "Breaded chicken topped with marinara sauce and melted cheese. Served with pasta.",
+        extras: ["Extra cheese", "Marinara sauce", "Garlic bread"]
+      },
+      "Lamb Chops": {
+        img: "images/lamb_chops.jpg",
+        price: "R180",
+        size: "2 chops",
+        desc: "Tender lamb chops seasoned and grilled, served with roasted potatoes and vegetables.",
+        extras: ["Mint sauce", "Extra vegetables", "Mashed potatoes"]
       },
 
       // Drinks
       "Cola": {
         img: "images/cola.jpg",
-        price: "$2.00",
-        size: "330ml",
-        desc: `A refreshing glass of cold, carbonated cola. Served with ice to give you a crisp, thirst-quenching drink. Perfect for pairing with any meal or enjoying on its own as a classic favorite.`,
-        extras: ["Extra ice", "Lemon slice"]
+        price: "R20",
+        size: "350ml",
+        desc: "Classic refreshing cola drink served chilled.",
+        extras: ["Ice", "Lemon slice"]
       },
       "Orange Juice": {
         img: "images/orange_juice.jpg",
-        price: "$3.00",
+        price: "R25",
         size: "350ml",
-        desc: `Freshly squeezed orange juice, full of natural vitamin C and bursting with flavor. Cold and revitalizing, served with or without ice. Ideal to start your morning or complement your meal with a refreshing touch.`,
-        extras: ["Extra pulp", "Ice cubes"]
+        desc: "Freshly squeezed orange juice. Sweet, tangy, and full of vitamin C.",
+        extras: ["Extra ice", "Orange slice"]
       },
       "Milkshake": {
         img: "images/milkshake.jpg",
-        price: "$4.50",
+        price: "R30",
         size: "400ml",
-        desc: `A creamy milkshake available in chocolate, vanilla, or strawberry. Blended to perfection with ice cream and milk for a smooth, thick consistency. Topped with whipped cream for an indulgent treat, perfect as a dessert or sweet refreshment.`,
-        extras: ["Whipped cream", "Choco chips", "Caramel drizzle"]
+        desc: "Creamy milkshake available in chocolate, vanilla, or strawberry flavors.",
+        extras: ["Extra whipped cream", "Chocolate syrup", "Sprinkles"]
+      },
+      "Water": {
+        img: "images/water.jpg",
+        price: "R15",
+        size: "500ml",
+        desc: "Refreshing bottled water to quench your thirst.",
+        extras: ["Ice", "Lemon slice"]
+      },
+      "Lemonade": {
+        img: "images/lemonade.jpg",
+        price: "R25",
+        size: "350ml",
+        desc: "Freshly squeezed lemonade with a hint of sweetness. Cold and refreshing.",
+        extras: ["Extra ice", "Mint leaves", "Lemon wedge"]
+      },
+      "Iced Tea": {
+        img: "images/iced_tea.jpg",
+        price: "R25",
+        size: "350ml",
+        desc: "Chilled iced tea with a touch of lemon. Sweetened or unsweetened.",
+        extras: ["Lemon slice", "Mint", "Ice"]
+      },
+      "Cappuccino": {
+        img: "images/cappuccino.jpg",
+        price: "R30",
+        size: "250ml",
+        desc: "Rich espresso topped with foamed milk. Perfect start to your day.",
+        extras: ["Extra foam", "Cinnamon", "Chocolate powder"]
+      },
+      "Latte": {
+        img: "images/latte.jpg",
+        price: "R30",
+        size: "250ml",
+        desc: "Smooth blend of espresso and steamed milk. Can be served hot or iced.",
+        extras: ["Extra shot", "Vanilla syrup", "Caramel drizzle"]
+      },
+      "Hot Chocolate": {
+        img: "images/hot_chocolate.jpg",
+        price: "R28",
+        size: "250ml",
+        desc: "Warm and rich chocolate drink topped with whipped cream.",
+        extras: ["Marshmallows", "Whipped cream", "Chocolate sprinkles"]
+      },
+      "Smoothie": {
+        img: "images/smoothie.jpg",
+        price: "R35",
+        size: "400ml",
+        desc: "Blended fresh fruits with yogurt or milk, refreshing and energizing.",
+        extras: ["Extra yogurt", "Honey", "Chia seeds"]
       }
     };
 
-    // Get meal name from URL
+    // Get meal name from URL and normalize
     const params = new URLSearchParams(window.location.search);
     let mealName = params.get("name");
-    if (mealName) mealName = mealName.trim().toLowerCase();
+    if (mealName) mealName = mealName.trim();
 
-    // Normalize keys for lookup
-    const normalizedMeals = {};
-    Object.keys(meals).forEach(key => {
-      normalizedMeals[key.toLowerCase()] = meals[key];
-    });
-
-    const meal = normalizedMeals[mealName];
-
+    // Fill in meal details
+    const meal = meals[mealName];
     if (meal) {
-      const properName = Object.keys(meals).find(k => k.toLowerCase() === mealName);
-
-      document.getElementById("meal-name").textContent = properName;
+      document.getElementById("meal-name").textContent = mealName;
       document.getElementById("meal-img").src = meal.img;
       document.getElementById("meal-price").textContent = meal.price;
       document.getElementById("meal-size").textContent = meal.size;
       document.getElementById("meal-desc").textContent = meal.desc;
-      document.getElementById("meal-hidden").value = properName;
+      document.getElementById("meal-hidden").value = mealName;
 
       // Generate extras checkboxes
       const extrasContainer = document.getElementById("meal-extras");
