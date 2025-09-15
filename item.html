@@ -17,14 +17,15 @@
     <p><strong>Serving size:</strong> <span id="meal-size"></span></p>
     <p id="meal-desc"></p>
 
-    <h3>Extras</h3>
-    <form id="extras-form">
+    <form action="order.html" method="GET" id="order-form">
+      <h3>Extras</h3>
       <div id="meal-extras"></div>
-    </form>
 
-    <form action="order.html" method="GET">
       <label for="notes">Special Requests:</label><br>
       <textarea id="notes" name="notes" rows="4" cols="40"></textarea><br><br>
+
+      <!-- Hidden input to pass meal name -->
+      <input type="hidden" name="meal" id="meal-hidden">
       <button type="submit">Place Order</button>
     </form>
   </main>
@@ -34,9 +35,7 @@
   </footer>
 
   <script>
-    // Complete meals data
     const meals = {
-      // Main Meals
       "Burger": {
         img: "images/burger.jpg",
         price: "$10.00",
@@ -58,8 +57,6 @@
         desc: "Al dente pasta tossed in a rich and creamy sauce, with your choice of chicken, beef, or vegetables. Garnished with fresh herbs and parmesan cheese for a perfect finishing touch. A hearty and satisfying dish for any pasta lover.",
         extras: ["Parmesan cheese", "Extra sauce", "Garlic bread", "Chili flakes"]
       },
-
-      // Starters
       "Garlic Bread": {
         img: "images/garlic_bread.jpg",
         price: "$5.00",
@@ -81,8 +78,6 @@
         desc: "A comforting bowl of soup made from fresh, seasonal ingredients. Each day features a new recipe, slowly simmered to bring out the deep, natural flavors. Served hot with a side of crusty bread, perfect for warming you up or starting a delicious meal.",
         extras: ["Bread roll", "Cheese topping", "Croutons"]
       },
-
-      // Desserts
       "Chocolate Cake": {
         img: "images/chocolate_cake.jpg",
         price: "$7.00",
@@ -104,8 +99,6 @@
         desc: "A refreshing mix of hand-selected seasonal fruits, cut and served fresh. Bursting with natural flavors, vitamins, and a hint of citrus dressing to enhance the taste. Perfect as a light dessert or a healthy snack to recharge your day.",
         extras: ["Yogurt", "Honey drizzle", "Chia seeds"]
       },
-
-      // Drinks
       "Cola": {
         img: "images/cola.jpg",
         price: "$2.00",
@@ -143,8 +136,32 @@
     const meal = normalizedMeals[mealName];
 
     if (meal) {
-      document.getElementById("meal-name").textContent = Object.keys(meals).find(k => k.toLowerCase() === mealName);
+      const properName = Object.keys(meals).find(k => k.toLowerCase() === mealName);
+      document.getElementById("meal-name").textContent = properName;
       document.getElementById("meal-img").src = meal.img;
       document.getElementById("meal-price").textContent = meal.price;
       document.getElementById("meal-size").textContent = meal.size;
-      document.getElementById("meal-
+      document.getElementById("meal-desc").textContent = meal.desc;
+      document.getElementById("meal-hidden").value = properName;
+
+      // Generate checkboxes for extras
+      const extrasContainer = document.getElementById("meal-extras");
+      extrasContainer.innerHTML = "";
+      meal.extras.forEach((extra, index) => {
+        const label = document.createElement("label");
+        label.style.display = "block";
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = "extras";
+        checkbox.value = extra;
+        checkbox.id = `extra-${index}`;
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(" " + extra));
+        extrasContainer.appendChild(label);
+      });
+    } else {
+      document.querySelector("main").innerHTML = "<p>Sorry, meal not found.</p>";
+    }
+  </script>
+</body>
+</html>
