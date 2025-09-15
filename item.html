@@ -109,48 +109,66 @@
         img: "images/cola.jpg",
         price: "$2.00",
         size: "330ml",
-        desc: `A refreshing glass of cold, carbonated cola. Served with ice to
-// Get meal name from URL
-const params = new URLSearchParams(window.location.search);
-let mealName = params.get("name");
-if (mealName) mealName = mealName.trim().toLowerCase();
+        desc: `A refreshing glass of cold, carbonated cola. Served with ice to give you a crisp, thirst-quenching drink. Perfect for pairing with any meal or enjoying on its own as a classic favorite.`,
+        extras: ["Extra ice", "Lemon slice"]
+      },
+      "Orange Juice": {
+        img: "images/orange_juice.jpg",
+        price: "$3.00",
+        size: "350ml",
+        desc: `Freshly squeezed orange juice, full of natural vitamin C and bursting with flavor. Cold and revitalizing, served with or without ice. Ideal to start your morning or complement your meal with a refreshing touch.`,
+        extras: ["Extra pulp", "Ice cubes"]
+      },
+      "Milkshake": {
+        img: "images/milkshake.jpg",
+        price: "$4.50",
+        size: "400ml",
+        desc: `A creamy milkshake available in chocolate, vanilla, or strawberry. Blended to perfection with ice cream and milk for a smooth, thick consistency. Topped with whipped cream for an indulgent treat, perfect as a dessert or sweet refreshment.`,
+        extras: ["Whipped cream", "Choco chips", "Caramel drizzle"]
+      }
+    };
 
-// Normalize keys for lookup
-const normalizedMeals = {};
-Object.keys(meals).forEach(key => {
-  normalizedMeals[key.toLowerCase()] = meals[key];
-});
+    // Get meal name from URL
+    const params = new URLSearchParams(window.location.search);
+    let mealName = params.get("name");
+    if (mealName) mealName = mealName.trim().toLowerCase();
 
-// Find meal object
-const meal = normalizedMeals[mealName];
+    // Normalize keys for lookup
+    const normalizedMeals = {};
+    Object.keys(meals).forEach(key => {
+      normalizedMeals[key.toLowerCase()] = meals[key];
+    });
 
-if (meal) {
-  // Get the original key to display proper capitalization
-  const properName = Object.keys(meals).find(k => k.toLowerCase() === mealName);
+    const meal = normalizedMeals[mealName];
 
-  document.getElementById("meal-name").textContent = properName;
-  document.getElementById("meal-img").src = meal.img;
-  document.getElementById("meal-price").textContent = meal.price;
-  document.getElementById("meal-size").textContent = meal.size;
-  document.getElementById("meal-desc").textContent = meal.desc;
-  document.getElementById("meal-hidden").value = properName;
+    if (meal) {
+      const properName = Object.keys(meals).find(k => k.toLowerCase() === mealName);
 
-  // Generate extras checkboxes
-  const extrasContainer = document.getElementById("meal-extras");
-  extrasContainer.innerHTML = "";
-  meal.extras.forEach((extra, index) => {
-    const label = document.createElement("label");
-    label.style.display = "block";
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.name = "extras";
-    checkbox.value = extra;
-    checkbox.id = `extra-${index}`;
-    label.appendChild(checkbox);
-    label.appendChild(document.createTextNode(" " + extra));
-    extrasContainer.appendChild(label);
-  });
-} else {
-  // If no match, show error
-  document.querySelector("main").innerHTML = "<p>Sorry, meal not found.</p>";
-}
+      document.getElementById("meal-name").textContent = properName;
+      document.getElementById("meal-img").src = meal.img;
+      document.getElementById("meal-price").textContent = meal.price;
+      document.getElementById("meal-size").textContent = meal.size;
+      document.getElementById("meal-desc").textContent = meal.desc;
+      document.getElementById("meal-hidden").value = properName;
+
+      // Generate extras checkboxes
+      const extrasContainer = document.getElementById("meal-extras");
+      extrasContainer.innerHTML = "";
+      meal.extras.forEach((extra, index) => {
+        const label = document.createElement("label");
+        label.style.display = "block";
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.name = "extras";
+        checkbox.value = extra;
+        checkbox.id = `extra-${index}`;
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(" " + extra));
+        extrasContainer.appendChild(label);
+      });
+    } else {
+      document.querySelector("main").innerHTML = "<p>Sorry, meal not found.</p>";
+    }
+  </script>
+</body>
+</html>
