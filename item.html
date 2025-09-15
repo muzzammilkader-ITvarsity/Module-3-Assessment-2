@@ -110,3 +110,47 @@
         price: "$2.00",
         size: "330ml",
         desc: `A refreshing glass of cold, carbonated cola. Served with ice to
+// Get meal name from URL
+const params = new URLSearchParams(window.location.search);
+let mealName = params.get("name");
+if (mealName) mealName = mealName.trim().toLowerCase();
+
+// Normalize keys for lookup
+const normalizedMeals = {};
+Object.keys(meals).forEach(key => {
+  normalizedMeals[key.toLowerCase()] = meals[key];
+});
+
+// Find meal object
+const meal = normalizedMeals[mealName];
+
+if (meal) {
+  // Get the original key to display proper capitalization
+  const properName = Object.keys(meals).find(k => k.toLowerCase() === mealName);
+
+  document.getElementById("meal-name").textContent = properName;
+  document.getElementById("meal-img").src = meal.img;
+  document.getElementById("meal-price").textContent = meal.price;
+  document.getElementById("meal-size").textContent = meal.size;
+  document.getElementById("meal-desc").textContent = meal.desc;
+  document.getElementById("meal-hidden").value = properName;
+
+  // Generate extras checkboxes
+  const extrasContainer = document.getElementById("meal-extras");
+  extrasContainer.innerHTML = "";
+  meal.extras.forEach((extra, index) => {
+    const label = document.createElement("label");
+    label.style.display = "block";
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.name = "extras";
+    checkbox.value = extra;
+    checkbox.id = `extra-${index}`;
+    label.appendChild(checkbox);
+    label.appendChild(document.createTextNode(" " + extra));
+    extrasContainer.appendChild(label);
+  });
+} else {
+  // If no match, show error
+  document.querySelector("main").innerHTML = "<p>Sorry, meal not found.</p>";
+}
